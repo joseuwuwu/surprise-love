@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎂 Feliz Cumpleaños, Mi Amor ❤️</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#ff4e8b,#ff89b5,#ffd6e7);
+overflow:hidden;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+#inicio,#carta{
+position:absolute;
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:30px;
+}
+
+#carta{
+display:none;
+animation:fade 2s;
+}
+
+h1{
+font-size:50px;
+color:white;
+text-shadow:2px 2px 8px black;
+margin-bottom:20px;
+}
+
+p{
+max-width:800px;
+font-size:24px;
+color:white;
+line-height:1.7;
+text-shadow:1px 1px 5px black;
+}
+
+button{
+margin-top:40px;
+padding:18px 40px;
+font-size:22px;
+border:none;
+border-radius:40px;
+background:white;
+color:#ff0066;
+cursor:pointer;
+box-shadow:0 0 20px white;
+transition:.4s;
+}
+
+button:hover{
+transform:scale(1.08);
+}
+
+.corazon{
+position:absolute;
+color:#fff;
+font-size:25px;
+animation:subir linear infinite;
+opacity:.8;
+}
+
+@keyframes subir{
+0%{
+transform:translateY(100vh);
+opacity:0;
+}
+20%{
+opacity:1;
+}
+100%{
+transform:translateY(-120vh);
+opacity:0;
+}
+}
+
+@keyframes fade{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+.confeti{
+position:absolute;
+width:8px;
+height:18px;
+background:white;
+animation:caer linear infinite;
+}
+
+@keyframes caer{
+0%{
+transform:translateY(-100px) rotate(0deg);
+}
+100%{
+transform:translateY(110vh) rotate(720deg);
+}
+}
+</style>
+</head>
+
+<body>
+
+<div id="inicio">
+<h1>🎁 Tengo una sorpresa para ti ❤️</h1>
+
+<button onclick="abrir()">
+💖 Ábreme 💖
+</button>
+</div>
+
+<div id="carta">
+
+<h1>🎂 ¡Feliz Cumpleaños Mi Amor! ❤️</h1>
+
+<p>
+Hoy es un día muy especial porque celebra el nacimiento de la mujer más maravillosa que existe.
+
+Gracias por hacer mi vida más bonita, por regalarme tu sonrisa, tu cariño y cada momento que compartimos juntos.
+
+Deseo que este nuevo año de vida esté lleno de felicidad, salud, sueños cumplidos y muchísimo amor.
+
+Nunca olvides lo importante que eres para mí.
+
+❤️ Eres mi persona favorita.
+
+✨ Te amo con todo mi corazón.
+
+¡¡Feliz cumpleaños mi princesa!! 🎂💕
+</p>
+
+</div>
+
+<audio id="musica" autoplay loop>
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+function abrir(){
+document.getElementById("inicio").style.display="none";
+document.getElementById("carta").style.display="flex";
+
+for(let i=0;i<120;i++){
+crearCorazon();
+}
+
+for(let i=0;i<250;i++){
+crearConfeti();
+}
+}
+
+function crearCorazon(){
+
+let c=document.createElement("div");
+c.className="corazon";
+c.innerHTML="❤️";
+
+c.style.left=Math.random()*100+"vw";
+c.style.animationDuration=(4+Math.random()*6)+"s";
+c.style.fontSize=(15+Math.random()*30)+"px";
+
+document.body.appendChild(c);
+
+setTimeout(()=>{
+c.remove();
+},10000);
+
+}
+
+setInterval(crearCorazon,300);
+
+function crearConfeti(){
+
+let c=document.createElement("div");
+
+c.className="confeti";
+
+const colores=["#ff0","#0ff","#0f0","#f0f","#fff","#ff0066","#00ccff"];
+
+c.style.background=colores[Math.floor(Math.random()*colores.length)];
+
+c.style.left=Math.random()*100+"vw";
+
+c.style.animationDuration=(2+Math.random()*3)+"s";
+
+document.body.appendChild(c);
+
+setTimeout(()=>{
+c.remove();
+},6000);
+
+}
+
+</script>
+
+</body>
+</html>
