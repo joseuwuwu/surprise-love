@@ -181,8 +181,8 @@ Nunca olvides lo importante que eres para mí.
 
 <button id="musicBtn" onclick="toggleMusica()">🎵 Música ON</button>
 
-<audio id="musica" loop crossorigin="anonymous">
-<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+<audio id="musica" loop>
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -197,10 +197,7 @@ audio.pause();
 musicBtn.textContent="🎵 Música ON";
 musicaActiva=false;
 }else{
-audio.play().catch(function(error){
-console.log("Error al reproducir:", error);
-alert("Intenta permitir la música en tu navegador");
-});
+audio.play();
 musicBtn.textContent="🎵 Música OFF";
 musicaActiva=true;
 }
@@ -211,9 +208,7 @@ document.getElementById("inicio").style.display="none";
 document.getElementById("carta").style.display="flex";
 
 if(!musicaActiva){
-audio.play().catch(function(error){
-console.log("Error al reproducir:", error);
-});
+audio.play();
 musicBtn.textContent="🎵 Música OFF";
 musicaActiva=true;
 }
