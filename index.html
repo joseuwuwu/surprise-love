@@ -114,6 +114,24 @@ transform:translateY(-100px) rotate(0deg);
 transform:translateY(110vh) rotate(720deg);
 }
 }
+
+#musicBtn{
+position:fixed;
+bottom:20px;
+right:20px;
+padding:12px 20px;
+background:#ff0066;
+color:white;
+border:none;
+border-radius:20px;
+cursor:pointer;
+font-size:16px;
+z-index:1000;
+}
+
+#musicBtn:hover{
+transform:scale(1.1);
+}
 </style>
 </head>
 
@@ -149,15 +167,39 @@ Nunca olvides lo importante que eres para mí.
 
 </div>
 
-<audio id="musica" autoplay loop>
+<button id="musicBtn" onclick="toggleMusica()">🎵 Música ON</button>
+
+<audio id="musica" loop>
 <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
+let musicaActiva = false;
+const audio = document.getElementById("musica");
+const musicBtn = document.getElementById("musicBtn");
+
+function toggleMusica(){
+if(musicaActiva){
+audio.pause();
+musicBtn.textContent="🎵 Música ON";
+musicaActiva=false;
+}else{
+audio.play();
+musicBtn.textContent="🎵 Música OFF";
+musicaActiva=true;
+}
+}
+
 function abrir(){
 document.getElementById("inicio").style.display="none";
 document.getElementById("carta").style.display="flex";
+
+if(!musicaActiva){
+audio.play();
+musicBtn.textContent="🎵 Música OFF";
+musicaActiva=true;
+}
 
 for(let i=0;i<120;i++){
 crearCorazon();
