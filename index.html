@@ -182,7 +182,7 @@ Nunca olvides lo importante que eres para mí.
 <button id="musicBtn" onclick="toggleMusica()">🎵 Música ON</button>
 
 <audio id="musica" loop>
-<source src="https://cdn.pixabay.com/download/audio/2023/05/05/audio_bef322ba01.mp3?t=" + Math.random() type="audio/mpeg">
+<source src="https://raw.githubusercontent.com/joseuwuwu/surprise-love/main/romantic.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -190,10 +190,6 @@ Nunca olvides lo importante que eres para mí.
 let musicaActiva = false;
 const audio = document.getElementById("musica");
 const musicBtn = document.getElementById("musicBtn");
-
-// Agregar timestamp para evitar caché
-const audioUrl = "https://cdn.pixabay.com/download/audio/2023/05/05/audio_bef322ba01.mp3?t=" + Date.now();
-audio.src = audioUrl;
 
 audio.volume = 0.7;
 
