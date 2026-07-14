@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📝 Mi Lista de Tareas</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Arial', Helvetica, sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#667eea,#764ba2);
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.container{
+width:100%;
+max-width:600px;
+background:white;
+border-radius:15px;
+box-shadow:0 10px 40px rgba(0,0,0,0.3);
+padding:30px;
+}
+
+h1{
+color:#333;
+margin-bottom:30px;
+text-align:center;
+font-size:32px;
+}
+
+.input-group{
+display:flex;
+gap:10px;
+margin-bottom:25px;
+}
+
+input{
+flex:1;
+padding:12px 15px;
+border:2px solid #ddd;
+border-radius:8px;
+font-size:16px;
+transition:border-color 0.3s;
+}
+
+input:focus{
+outline:none;
+border-color:#667eea;
+}
+
+button{
+padding:12px 25px;
+background:#667eea;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-size:16px;
+font-weight:bold;
+transition:0.3s;
+}
+
+button:hover{
+background:#764ba2;
+transform:scale(1.05);
+}
+
+.task-list{
+max-height:500px;
+overflow-y:auto;
+}
+
+.task-item{
+display:flex;
+align-items:center;
+gap:12px;
+padding:15px;
+background:#f8f9fa;
+border-radius:8px;
+margin-bottom:10px;
+transition:0.3s;
+}
+
+.task-item:hover{
+background:#e9ecef;
+}
+
+.task-item.completed{
+opacity:0.6;
+}
+
+.task-item.completed .task-text{
+text-decoration:line-through;
+color:#999;
+}
+
+input[type="checkbox"]{
+width:20px;
+height:20px;
+cursor:pointer;
+}
+
+.task-text{
+flex:1;
+color:#333;
+word-break:break-word;
+}
+
+.delete-btn{
+padding:8px 15px;
+background:#ff6b6b;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+font-size:14px;
+transition:0.3s;
+}
+
+.delete-btn:hover{
+background:#ff5252;
+}
+
+.stats{
+display:flex;
+justify-content:space-between;
+margin-top:25px;
+padding-top:15px;
+border-top:2px solid #eee;
+text-align:center;
+}
+
+.stat-item{
+flex:1;
+}
+
+.stat-number{
+font-size:24px;
+font-weight:bold;
+color:#667eea;
+}
+
+.stat-label{
+font-size:12px;
+color:#999;
+text-transform:uppercase;
+}
+
+.empty-message{
+text-align:center;
+color:#999;
+padding:40px 20px;
+font-size:18px;
+}
+
+.clear-all-btn{
+width:100%;
+margin-top:15px;
+padding:10px;
+background:#ff6b6b;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+transition:0.3s;
+}
+
+.clear-all-btn:hover{
+background:#ff5252;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📝 Mi Lista de Tareas</h1>
+
+<div class="input-group">
+<input type="text" id="taskInput" placeholder="Añade una nueva tarea...">
+<button onclick="addTask()">Añadir</button>
+</div>
+
+<div class="task-list" id="taskList">
+<div class="empty-message">No hay tareas. ¡Crea una nueva!</div>
+</div>
+
+<div class="stats">
+<div class="stat-item">
+<div class="stat-number" id="totalTasks">0</div>
+<div class="stat-label">Total</div>
+</div>
+<div class="stat-item">
+<div class="stat-number" id="completedTasks">0</div>
+<div class="stat-label">Completadas</div>
+</div>
+<div class="stat-item">
+<div class="stat-number" id="pendingTasks">0</div>
+<div class="stat-label">Pendientes</div>
+</div>
+</div>
+
+<button class="clear-all-btn" onclick="clearAllTasks()">Limpiar Todo</button>
+
+</div>
+
+<script>
+
+const taskInput = document.getElementById("taskInput");
+const taskList = document.getElementById("taskList");
+const totalTasksEl = document.getElementById("totalTasks");
+const completedTasksEl = document.getElementById("completedTasks");
+const pendingTasksEl = document.getElementById("pendingTasks");
+
+// Cargar tareas del localStorage
+function loadTasks(){
+const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+taskList.innerHTML = "";
+
+if(tasks.length === 0){
+taskList.innerHTML = '<div class="empty-message">No hay tareas. ¡Crea una nueva!</div>';
+} else {
+tasks.forEach((task, index) => {
+addTaskToDOM(task, index);
+});
+}
+
+updateStats();
+}
+
+// Añadir tarea
+function addTask(){
+const taskText = taskInput.value.trim();
+
+if(taskText === ""){
+alert("Por favor, escribe una tarea");
+return;
+}
+
+const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+const newTask = {
+text: taskText,
+completed: false,
+date: new Date().toLocaleString()
+};
+
+tasks.push(newTask);
+localStorage.setItem("tasks", JSON.stringify(tasks));
+
+taskInput.value = "";
+loadTasks();
+}
+
+// Añadir tarea al DOM
+function addTaskToDOM(task, index){
+if(taskList.querySelector(".empty-message")){
+taskList.innerHTML = "";
+}
+
+const taskItem = document.createElement("div");
+taskItem.className = "task-item" + (task.completed ? " completed" : "");
+
+taskItem.innerHTML = `
+<input type="checkbox" ${task.completed ? "checked" : ""} onchange="toggleTask(${index})">
+<div class="task-text">${task.text}</div>
+<button class="delete-btn" onclick="deleteTask(${index})">Eliminar</button>
+`;
+
+taskList.appendChild(taskItem);
+}
+
+// Marcar como completada
+function toggleTask(index){
+const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+tasks[index].completed = !tasks[index].completed;
+localStorage.setItem("tasks", JSON.stringify(tasks));
+loadTasks();
+}
+
+// Eliminar tarea
+function deleteTask(index){
+const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+tasks.splice(index, 1);
+localStorage.setItem("tasks", JSON.stringify(tasks));
+loadTasks();
+}
+
+// Limpiar todas las tareas
+function clearAllTasks(){
+if(confirm("¿Estás seguro de que quieres eliminar todas las tareas?")){
+localStorage.setItem("tasks", JSON.stringify([]));
+loadTasks();
+}
+}
+
+// Actualizar estadísticas
+function updateStats(){
+const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+const completed = tasks.filter(t => t.completed).length;
+const pending = tasks.length - completed;
+
+totalTasksEl.textContent = tasks.length;
+completedTasksEl.textContent = completed;
+pendingTasksEl.textContent = pending;
+}
+
+// Permitir añadir con Enter
+taskInput.addEventListener("keypress", (e) => {
+if(e.key === "Enter"){
+addTask();
+}
+});
+
+// Cargar tareas al iniciar
+loadTasks();
+
+</script>
+
+</body>
+</html>
