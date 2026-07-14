@@ -10,28 +10,30 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
+font-family:'Arial', Helvetica, sans-serif;
 }
 
 body{
 background:linear-gradient(135deg,#ff4e8b,#ff89b5,#ffd6e7);
-overflow:hidden;
-height:100vh;
+overflow-y:auto;
+overflow-x:hidden;
+min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
 text-align:center;
+padding:20px;
 }
 
 #inicio,#carta{
-position:absolute;
+position:relative;
 width:100%;
-height:100%;
+max-width:900px;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-padding:30px;
+padding:40px 20px;
 }
 
 #carta{
@@ -40,22 +42,24 @@ animation:fade 2s;
 }
 
 h1{
-font-size:50px;
+font-size:48px;
 color:white;
 text-shadow:2px 2px 8px black;
 margin-bottom:20px;
 }
 
 p{
-max-width:800px;
-font-size:24px;
+font-size:22px;
 color:white;
-line-height:1.7;
+line-height:1.9;
 text-shadow:1px 1px 5px black;
+margin-bottom:20px;
+white-space:pre-wrap;
+word-wrap:break-word;
 }
 
 button{
-margin-top:40px;
+margin-top:30px;
 padding:18px 40px;
 font-size:22px;
 border:none;
@@ -65,6 +69,7 @@ color:#ff0066;
 cursor:pointer;
 box-shadow:0 0 20px white;
 transition:.4s;
+font-weight:bold;
 }
 
 button:hover{
@@ -72,11 +77,12 @@ transform:scale(1.08);
 }
 
 .corazon{
-position:absolute;
+position:fixed;
 color:#fff;
 font-size:25px;
 animation:subir linear infinite;
 opacity:.8;
+z-index:10;
 }
 
 @keyframes subir{
@@ -99,11 +105,12 @@ to{opacity:1;}
 }
 
 .confeti{
-position:absolute;
+position:fixed;
 width:8px;
 height:18px;
 background:white;
 animation:caer linear infinite;
+z-index:10;
 }
 
 @keyframes caer{
@@ -127,6 +134,8 @@ border-radius:20px;
 cursor:pointer;
 font-size:16px;
 z-index:1000;
+font-weight:bold;
+box-shadow:0 0 15px rgba(0,0,0,0.3);
 }
 
 #musicBtn:hover{
@@ -150,11 +159,14 @@ transform:scale(1.1);
 <h1>🎂 ¡Feliz Cumpleaños Mi Amor! ❤️</h1>
 
 <p>
-Hoy es un día muy especial porque celebra el nacimiento de la mujer más maravillosa que existe.
+Hoy es un día muy especial porque celebra el nacimiento 
+de la mujer más maravillosa que existe.
 
-Gracias por hacer mi vida más bonita, por regalarme tu sonrisa, tu cariño y cada momento que compartimos juntos.
+Gracias por hacer mi vida más bonita, por regalarme 
+tu sonrisa, tu cariño y cada momento que compartimos juntos.
 
-Deseo que este nuevo año de vida esté lleno de felicidad, salud, sueños cumplidos y muchísimo amor.
+Deseo que este nuevo año de vida esté lleno de felicidad, 
+salud, sueños cumplidos y muchísimo amor.
 
 Nunca olvides lo importante que eres para mí.
 
@@ -170,7 +182,7 @@ Nunca olvides lo importante que eres para mí.
 <button id="musicBtn" onclick="toggleMusica()">🎵 Música ON</button>
 
 <audio id="musica" loop>
-<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+<source src="https://cdn.pixabay.com/download/audio/2024/06/19/audio_3e5c0b91ca.mp3" type="audio/mpeg">
 </audio>
 
 <script>
